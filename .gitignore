@@ -1,0 +1,20 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.venv
+env/
+venv/
+
+# Vector Database (This is critical to ignore)
+chroma_db_library/
+
+# IDE-specific
+.vscode/
+!.vscode/settings.json
+
+# OS-specific
+.DS_Store
+Thumbs.db
