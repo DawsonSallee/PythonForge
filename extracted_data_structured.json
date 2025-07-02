@@ -1,0 +1,802 @@
+{
+  "documents": [
+    {
+      "source_file": "chapter3.html",
+      "chapter_title": "3. An Informal Introduction to Python",
+      "sections": [
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "an-informal-introduction-to-python",
+            "section_number": "3.",
+            "section_title": "An Informal Introduction to Python"
+          },
+          "pairs": [
+            {
+              "concept": "3. An Informal Introduction to Python In the following examples, input and output are distinguished by the presence or absence of prompts ( >>> and … ): to repeat the example, you must type everything after the prompt, when the prompt appears; lines that do not begin with a prompt are output from the interpreter. Note that a secondary prompt on a line by itself in an example means you must type a blank line; this is used to end a multi-line command. You can use the “Copy” button (it appears in the upper-right corner when hovering over or tapping a code example), which strips prompts and omits output, to copy and paste the input lines into your interpreter. Many of the examples in this manual, even those entered at the interactive prompt, include comments. Comments in Python start with the hash character, # , and extend to the end of the physical line. A comment may appear at the start of a line or following whitespace or code, but not within a string literal. A hash character within a string literal is just a hash character. Since comments are to clarify code and are not interpreted by Python, they may be omitted when typing in examples. Some examples:",
+              "example": "# this is the first comment\nspam = 1  # and this is the second comment\n          # ... and now a third!\ntext = \"# This is not a comment because it's inside quotes.\""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "using-python-as-a-calculator",
+            "section_number": "3.1.",
+            "section_title": "Using Python as a Calculator"
+          },
+          "pairs": [
+            {
+              "concept": "3.1. Using Python as a Calculator Let’s try some simple Python commands. Start the interpreter and wait for the primary prompt, >>> . (It shouldn’t take long.)",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "numbers",
+            "section_number": "3.1.1.",
+            "section_title": "Numbers"
+          },
+          "pairs": [
+            {
+              "concept": "3.1.1. Numbers The interpreter acts as a simple calculator: you can type an expression at it and it will write the value. Expression syntax is straightforward: the operators + , - , * and / can be used to perform arithmetic; parentheses ( () ) can be used for grouping. For example:",
+              "example": "2 + 2\n\n50 - 5*6\n\n(50 - 5*6) / 4\n\n8 / 5  # division always returns a floating-point number"
+            },
+            {
+              "concept": "The integer numbers (e.g. 2 , 4 , 20 ) have type int , the ones with a fractional part (e.g. 5.0 , 1.6 ) have type float . We will see more about numeric types later in the tutorial. Division ( / ) always returns a float. To do floor division and get an integer result you can use the // operator; to calculate the remainder you can use % :",
+              "example": "17 / 3  # classic division returns a float\n\n\n17 // 3  # floor division discards the fractional part\n\n17 % 3  # the % operator returns the remainder of the division\n\n5 * 3 + 2  # floored quotient * divisor + remainder"
+            },
+            {
+              "concept": "With Python, it is possible to use the ** operator to calculate powers [ 1 ] :",
+              "example": "5 ** 2  # 5 squared\n\n2 ** 7  # 2 to the power of 7"
+            },
+            {
+              "concept": "The equal sign ( = ) is used to assign a value to a variable. Afterwards, no result is displayed before the next interactive prompt:",
+              "example": "width = 20\nheight = 5 * 9\nwidth * height"
+            },
+            {
+              "concept": "If a variable is not “defined” (assigned a value), trying to use it will give you an error:",
+              "example": "n  # try to access an undefined variable\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nNameError: name 'n' is not defined"
+            },
+            {
+              "concept": "There is full support for floating point; operators with mixed type operands convert the integer operand to floating point:",
+              "example": "4 * 3.75 - 1"
+            },
+            {
+              "concept": "In interactive mode, the last printed expression is assigned to the variable _ . This means that when you are using Python as a desk calculator, it is somewhat easier to continue calculations, for example:",
+              "example": "tax = 12.5 / 100\nprice = 100.50\nprice * tax\n\nprice + _\n\nround(_, 2)"
+            },
+            {
+              "concept": "This variable should be treated as read-only by the user. Don’t explicitly assign a value to it — you would create an independent local variable with the same name masking the built-in variable with its magic behavior. In addition to int and float , Python supports other types of numbers, such as Decimal and Fraction . Python also has built-in support for complex numbers , and uses the j or J suffix to indicate the imaginary part (e.g. 3+5j ).",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "text",
+            "section_number": "3.1.2.",
+            "section_title": "Text"
+          },
+          "pairs": [
+            {
+              "concept": "3.1.2. Text Python can manipulate text (represented by type str , so-called “strings”) as well as numbers. This includes characters “ ! ”, words “ rabbit ”, names “ Paris ”, sentences “ Got your back. ”, etc. “ Yay! :) ”. They can be enclosed in single quotes ( '...' ) or double quotes ( \"...\" ) with the same result [ 2 ] .",
+              "example": "'spam eggs'  # single quotes\n\n\"Paris rabbit got your back :)! Yay!\"  # double quotes\n\n'1975'  # digits and numerals enclosed in quotes are also strings"
+            },
+            {
+              "concept": "To quote a quote, we need to “escape” it, by preceding it with \\ . Alternatively, we can use the other type of quotation marks:",
+              "example": "'doesn\\'t'  # use \\' to escape the single quote...\n\n\"doesn't\"  # ...or use double quotes instead\n\n'\"Yes,\" they said.'\n\n\"\\\"Yes,\\\" they said.\"\n\n'\"Isn\\'t,\" they said.'"
+            },
+            {
+              "concept": "In the Python shell, the string definition and output string can look different. The print() function produces a more readable output, by omitting the enclosing quotes and by printing escaped and special characters:",
+              "example": "s = 'First line.\\nSecond line.'  # \\n means newline\ns  # without print(), special characters are included in the string\n\nprint(s)  # with print(), special characters are interpreted, so \\n produces new line"
+            },
+            {
+              "concept": "If you don’t want characters prefaced by \\ to be interpreted as special characters, you can use raw strings by adding an r before the first quote:",
+              "example": "print('C:\\some\\name')  # here \\n means newline!\n\n\nprint(r'C:\\some\\name')  # note the r before the quote"
+            },
+            {
+              "concept": "There is one subtle aspect to raw strings: a raw string may not end in an odd number of \\ characters; see the FAQ entry for more information and workarounds. String literals can span multiple lines. One way is using triple-quotes: \"\"\"...\"\"\" or '''...''' . End-of-line characters are automatically included in the string, but it’s possible to prevent this by adding a \\ at the end of the line. In the following example, the initial newline is not included:",
+              "example": "print(\"\"\"\\\nUsage: thingy [OPTIONS]\n     -h                        Display this usage message\n     -H hostname               Hostname to connect to\n\"\"\")"
+            },
+            {
+              "concept": "Strings can be concatenated (glued together) with the + operator, and repeated with * :",
+              "example": "# 3 times 'un', followed by 'ium'\n3 * 'un' + 'ium'"
+            },
+            {
+              "concept": "Two or more string literals (i.e. the ones enclosed between quotes) next to each other are automatically concatenated.",
+              "example": "'Py' 'thon'"
+            },
+            {
+              "concept": "This feature is particularly useful when you want to break long strings:",
+              "example": "text = ('Put several strings within parentheses '\n        'to have them joined together.')\ntext"
+            },
+            {
+              "concept": "This only works with two literals though, not with variables or expressions:",
+              "example": "prefix = 'Py'\nprefix 'thon'  # can't concatenate a variable and a string literal\n  File \"<stdin>\", line 1\n    prefix 'thon'\n           ^^^^^^\nSyntaxError: invalid syntax\n('un' * 3) 'ium'\n  File \"<stdin>\", line 1\n    ('un' * 3) 'ium'\n               ^^^^^\nSyntaxError: invalid syntax"
+            },
+            {
+              "concept": "If you want to concatenate variables or a variable and a literal, use + :",
+              "example": "prefix + 'thon'"
+            },
+            {
+              "concept": "Strings can be indexed (subscripted), with the first character having index 0. There is no separate character type; a character is simply a string of size one:",
+              "example": "word = 'Python'\nword[0]  # character in position 0\n\nword[5]  # character in position 5"
+            },
+            {
+              "concept": "Indices may also be negative numbers, to start counting from the right:",
+              "example": "word[-1]  # last character\n\nword[-2]  # second-last character\n\nword[-6]"
+            },
+            {
+              "concept": "Note that since -0 is the same as 0, negative indices start from -1. In addition to indexing, slicing is also supported. While indexing is used to obtain individual characters, slicing allows you to obtain a substring:",
+              "example": "word[0:2]  # characters from position 0 (included) to 2 (excluded)\n\nword[2:5]  # characters from position 2 (included) to 5 (excluded)"
+            },
+            {
+              "concept": "Slice indices have useful defaults; an omitted first index defaults to zero, an omitted second index defaults to the size of the string being sliced.",
+              "example": "word[:2]   # character from the beginning to position 2 (excluded)\n\nword[4:]   # characters from position 4 (included) to the end\n\nword[-2:]  # characters from the second-last (included) to the end"
+            },
+            {
+              "concept": "Note how the start is always included, and the end always excluded. This makes sure that s[:i] + s[i:] is always equal to s :",
+              "example": "word[:2] + word[2:]\n\nword[:4] + word[4:]"
+            },
+            {
+              "concept": "One way to remember how slices work is to think of the indices as pointing between characters, with the left edge of the first character numbered 0. Then the right edge of the last character of a string of n characters has index n , for example:",
+              "example": "+---+---+---+---+---+---+\n | P | y | t | h | o | n |\n +---+---+---+---+---+---+\n 0   1   2   3   4   5   6\n-6  -5  -4  -3  -2  -1"
+            },
+            {
+              "concept": "The first row of numbers gives the position of the indices 0…6 in the string; the second row gives the corresponding negative indices. The slice from i to j consists of all characters between the edges labeled i and j , respectively. For non-negative indices, the length of a slice is the difference of the indices, if both are within bounds. For example, the length of word[1:3] is 2. Attempting to use an index that is too large will result in an error:",
+              "example": "word[42]  # the word only has 6 characters\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nIndexError: string index out of range"
+            },
+            {
+              "concept": "However, out of range slice indexes are handled gracefully when used for slicing:",
+              "example": "word[4:42]\n\nword[42:]"
+            },
+            {
+              "concept": "Python strings cannot be changed — they are immutable . Therefore, assigning to an indexed position in the string results in an error:",
+              "example": "word[0] = 'J'\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nTypeError: 'str' object does not support item assignment\nword[2:] = 'py'\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nTypeError: 'str' object does not support item assignment"
+            },
+            {
+              "concept": "If you need a different string, you should create a new one:",
+              "example": "'J' + word[1:]\n\nword[:2] + 'py'"
+            },
+            {
+              "concept": "The built-in function len() returns the length of a string:",
+              "example": "s = 'supercalifragilisticexpialidocious'\nlen(s)"
+            },
+            {
+              "concept": "See also Text Sequence Type — str Strings are examples of sequence types , and support the common operations supported by such types. String Methods Strings support a large number of methods for basic transformations and searching. f-strings String literals that have embedded expressions. Format String Syntax Information about string formatting with str.format() . printf-style String Formatting The old formatting operations invoked when strings are the left operand of the % operator are described in more detail here.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "lists",
+            "section_number": "3.1.3.",
+            "section_title": "Lists"
+          },
+          "pairs": [
+            {
+              "concept": "3.1.3. Lists Python knows a number of compound data types, used to group together other values. The most versatile is the list , which can be written as a list of comma-separated values (items) between square brackets. Lists might contain items of different types, but usually the items all have the same type.",
+              "example": "squares = [1, 4, 9, 16, 25]\nsquares"
+            },
+            {
+              "concept": "Like strings (and all other built-in sequence types), lists can be indexed and sliced:",
+              "example": "squares[0]  # indexing returns the item\n\nsquares[-1]\n\nsquares[-3:]  # slicing returns a new list"
+            },
+            {
+              "concept": "Lists also support operations like concatenation:",
+              "example": "squares + [36, 49, 64, 81, 100]"
+            },
+            {
+              "concept": "Unlike strings, which are immutable , lists are a mutable type, i.e. it is possible to change their content:",
+              "example": "cubes = [1, 8, 27, 65, 125]  # something's wrong here\n4 ** 3  # the cube of 4 is 64, not 65!\n\ncubes[3] = 64  # replace the wrong value\ncubes"
+            },
+            {
+              "concept": "You can also add new items at the end of the list, by using the list.append() method (we will see more about methods later):",
+              "example": "cubes.append(216)  # add the cube of 6\ncubes.append(7 ** 3)  # and the cube of 7\ncubes"
+            },
+            {
+              "concept": "Simple assignment in Python never copies data. When you assign a list to a variable, the variable refers to the existing list . Any changes you make to the list through one variable will be seen through all other variables that refer to it.:",
+              "example": "rgb = [\"Red\", \"Green\", \"Blue\"]\nrgba = rgb\nid(rgb) == id(rgba)  # they reference the same object\n\nrgba.append(\"Alph\")\nrgb"
+            },
+            {
+              "concept": "All slice operations return a new list containing the requested elements. This means that the following slice returns a shallow copy of the list:",
+              "example": "correct_rgba = rgba[:]\ncorrect_rgba[-1] = \"Alpha\"\ncorrect_rgba\n\nrgba"
+            },
+            {
+              "concept": "Assignment to slices is also possible, and this can even change the size of the list or clear it entirely:",
+              "example": "letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']\nletters\n\n# replace some values\nletters[2:5] = ['C', 'D', 'E']\nletters\n\n# now remove them\nletters[2:5] = []\nletters\n\n# clear the list by replacing all the elements with an empty list\nletters[:] = []\nletters"
+            },
+            {
+              "concept": "The built-in function len() also applies to lists:",
+              "example": "letters = ['a', 'b', 'c', 'd']\nlen(letters)"
+            },
+            {
+              "concept": "It is possible to nest lists (create lists containing other lists), for example:",
+              "example": "a = ['a', 'b', 'c']\nn = [1, 2, 3]\nx = [a, n]\nx\n\nx[0]\n\nx[0][1]"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter3.html",
+            "chapter_title": "3. An Informal Introduction to Python",
+            "section_id": "first-steps-towards-programming",
+            "section_number": "3.2.",
+            "section_title": "First Steps Towards Programming"
+          },
+          "pairs": [
+            {
+              "concept": "3.2. First Steps Towards Programming Of course, we can use Python for more complicated tasks than adding two and two together. For instance, we can write an initial sub-sequence of the Fibonacci series as follows:",
+              "example": "# Fibonacci series:\n# the sum of two elements defines the next\na, b = 0, 1\nwhile a < 10:\n    print(a)\n    a, b = b, a+b"
+            },
+            {
+              "concept": "This example introduces several new features. The first line contains a multiple assignment : the variables a and b simultaneously get the new values 0 and 1. On the last line this is used again, demonstrating that the expressions on the right-hand side are all evaluated first before any of the assignments take place. The right-hand side expressions are evaluated from the left to the right. The while loop executes as long as the condition (here: a < 10 ) remains true. In Python, like in C, any non-zero integer value is true; zero is false. The condition may also be a string or list value, in fact any sequence; anything with a non-zero length is true, empty sequences are false. The test used in the example is a simple comparison. The standard comparison operators are written the same as in C: < (less than), > (greater than), == (equal to), <= (less than or equal to), >= (greater than or equal to) and != (not equal to). The body of the loop is indented : indentation is Python’s way of grouping statements. At the interactive prompt, you have to type a tab or space(s) for each indented line. In practice you will prepare more complicated input for Python with a text editor; all decent text editors have an auto-indent facility. When a compound statement is entered interactively, it must be followed by a blank line to indicate completion (since the parser cannot guess when you have typed the last line). Note that each line within a basic block must be indented by the same amount. The print() function writes the value of the argument(s) it is given. It differs from just writing the expression you want to write (as we did earlier in the calculator examples) in the way it handles multiple arguments, floating-point quantities, and strings. Strings are printed without quotes, and a space is inserted between items, so you can format things nicely, like this: >>> i = 256 * 256 >>> print ( 'The value of i is' , i ) The value of i is 65536 The keyword argument end can be used to avoid the newline after the output, or end the output with a different string: >>> a , b = 0 , 1 >>> while a < 1000 : ... print ( a , end = ',' ) ... a , b = b , a + b ... 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987, Footnotes [ 1 ] Since ** has higher precedence than - , -3**2 will be interpreted as -(3**2) and thus result in -9 . To avoid this and get 9 , you can use (-3)**2 . [ 2 ] Unlike other languages, special characters such as \\n have the same meaning with both single ( '...' ) and double ( \"...\" ) quotes. The only difference between the two is that within single quotes you don’t need to escape \" (but you have to escape \\' ) and vice versa.",
+              "example": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source_file": "chapter4.html",
+      "chapter_title": "4. More Control Flow Tools",
+      "sections": [
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "more-control-flow-tools",
+            "section_number": "4.",
+            "section_title": "More Control Flow Tools"
+          },
+          "pairs": [
+            {
+              "concept": "4. More Control Flow Tools As well as the while statement just introduced, Python uses a few more that we will encounter in this chapter.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "if-statements",
+            "section_number": "4.1.",
+            "section_title": "if Statements"
+          },
+          "pairs": [
+            {
+              "concept": "4.1. if Statements Perhaps the most well-known statement type is the if statement. For example:",
+              "example": "x\n                                            =\n                                            int\n                                            (\n                                            input\n                                            (\n                                            \"Please enter an integer: \"\n                                            ))\n                                            \n                                            \n                                            if\n                                            x\n                                            <\n                                            0\n                                            :\n                                            \n                                            x\n                                            =\n                                            0\n                                            \n                                            print\n                                            (\n                                            'Negative changed to zero '\n                                            )\n                                            \n                                            elif\n                                            x\n                                            ==\n                                            0\n                                            :\n                                            \n                                            print\n                                            (\n                                            'Zero '\n                                            )\n                                            \n                                            elif\n                                            x\n                                            ==\n                                            1\n                                            :\n                                            \n                                            print\n                                            (\n                                            'Single '\n                                            )\n                                            \n                                            else\n                                            :\n                                            \n                                            print\n                                            (\n                                            'More '\n                                            )"
+            },
+            {
+              "concept": "There can be zero or more elif parts, and the else part is optional. The keyword ‘ elif ’ is short for ‘else if’, and is useful to avoid excessive indentation. An if … elif … elif … sequence is a substitute for the switch or case statements found in other languages. If you’re comparing the same value to several constants, or checking for specific types or attributes, you may also find the match statement useful. For more details see match Statements .",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "for-statements",
+            "section_number": "4.2.",
+            "section_title": "for Statements"
+          },
+          "pairs": [
+            {
+              "concept": "4.2. for Statements The for statement in Python differs a bit from what you may be used to in C or Pascal. Rather than always iterating over an arithmetic progression of numbers (like in Pascal), or giving the user the ability to define both the iteration step and halting condition (as C), Python’s for statement iterates over the items of any sequence (a list or a string), in the order that they appear in the sequence. For example (no pun intended):",
+              "example": "# Measure some strings:\n                                            \n                                            words\n                                            =\n                                            [\n                                            'cat '\n                                            ,\n                                            'window '\n                                            ,\n                                            'defenestrate '\n                                            ]\n                                            \n                                            for\n                                            w\n                                            in\n                                            words\n                                            :\n                                            \n                                            print\n                                            (\n                                            w\n                                            ,\n                                            len\n                                            (\n                                            w\n                                            ))"
+            },
+            {
+              "concept": "Code that modifies a collection while iterating over that same collection can be tricky to get right. Instead, it is usually more straight-forward to loop over a copy of the collection or to create a new collection:",
+              "example": "# Create a sample collection\n                                            users\n                                            =\n                                            {\n                                            'Hans '\n                                            :\n                                            'active '\n                                            ,\n                                            'Éléonore '\n                                            :\n                                            'inactive '\n                                            ,\n                                            '景太郎 '\n                                            :\n                                            'active '\n                                            }\n                                            # Strategy:  Iterate over a copy\n                                            for\n                                            user\n                                            ,\n                                            status\n                                            in\n                                            users\n                                            .\n                                            copy\n                                            ()\n                                            .\n                                            items\n                                            ():\n                                            if\n                                            status\n                                            ==\n                                            'inactive '\n                                            :\n                                            del\n                                            users\n                                            [\n                                            user\n                                            ]\n                                            # Strategy:  Create a new collection\n                                            active_users\n                                            =\n                                            {}\n                                            for\n                                            user\n                                            ,\n                                            status\n                                            in\n                                            users\n                                            .\n                                            items\n                                            ():\n                                            if\n                                            status\n                                            ==\n                                            'active '\n                                            :\n                                            active_users\n                                            [\n                                            user\n                                            ]\n                                            =\n                                            status"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "the-range-function",
+            "section_number": "4.3.",
+            "section_title": "The range() Function"
+          },
+          "pairs": [
+            {
+              "concept": "4.3. The range() Function If you do need to iterate over a sequence of numbers, the built-in function range() comes in handy. It generates arithmetic progressions:",
+              "example": "for\n                                            i\n                                            in\n                                            range\n                                            (\n                                            5\n                                            ):\n                                            \n                                            print\n                                            (\n                                            i\n                                            )"
+            },
+            {
+              "concept": "The given end point is never part of the generated sequence; range(10) generates 10 values, the legal indices for items of a sequence of length 10. It is possible to let the range start at another number, or to specify a different increment (even negative; sometimes this is called the ‘step’):",
+              "example": "list\n                                            (\n                                            range\n                                            (\n                                            5\n                                            ,\n                                            10\n                                            ))\n                                            \n                                            \n                                            list\n                                            (\n                                            range\n                                            (\n                                            0\n                                            ,\n                                            10\n                                            ,\n                                            3\n                                            ))\n                                            \n                                            \n                                            list\n                                            (\n                                            range\n                                            (\n                                            -\n                                            10\n                                            ,\n                                            -\n                                            100\n                                            ,\n                                            -\n                                            30\n                                            ))"
+            },
+            {
+              "concept": "To iterate over the indices of a sequence, you can combine range() and len() as follows:",
+              "example": "a\n                                            =\n                                            [\n                                            'Mary '\n                                            ,\n                                            'had '\n                                            ,\n                                            'a '\n                                            ,\n                                            'little '\n                                            ,\n                                            'lamb '\n                                            ]\n                                            \n                                            for\n                                            i\n                                            in\n                                            range\n                                            (\n                                            len\n                                            (\n                                            a\n                                            )):\n                                            \n                                            print\n                                            (\n                                            i\n                                            ,\n                                            a\n                                            [\n                                            i\n                                            ])"
+            },
+            {
+              "concept": "In most such cases, however, it is convenient to use the enumerate() function, see Looping Techniques . A strange thing happens if you just print a range:",
+              "example": "range\n                                            (\n                                            10\n                                            )"
+            },
+            {
+              "concept": "In many ways the object returned by range() behaves as if it is a list, but in fact it isn’t. It is an object which returns the successive items of the desired sequence when you iterate over it, but it doesn’t really make the list, thus saving space. We say such an object is iterable , that is, suitable as a target for functions and constructs that expect something from which they can obtain successive items until the supply is exhausted. We have seen that the for statement is such a construct, while an example of a function that takes an iterable is sum() :",
+              "example": "sum\n                                            (\n                                            range\n                                            (\n                                            4\n                                            ))\n                                            # 0 + 1 + 2 + 3"
+            },
+            {
+              "concept": "Later we will see more functions that return iterables and take iterables as arguments. In chapter Data Structures , we will discuss in more detail about list() .",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "break-and-continue-statements",
+            "section_number": "4.4.",
+            "section_title": "break and continue Statements"
+          },
+          "pairs": [
+            {
+              "concept": "4.4. break and continue Statements The break statement breaks out of the innermost enclosing for or while loop:",
+              "example": "for\n                                            n\n                                            in\n                                            range\n                                            (\n                                            2\n                                            ,\n                                            10\n                                            ):\n                                            \n                                            for\n                                            x\n                                            in\n                                            range\n                                            (\n                                            2\n                                            ,\n                                            n\n                                            ):\n                                            \n                                            if\n                                            n\n                                            %\n                                            x\n                                            ==\n                                            0\n                                            :\n                                            \n                                            print\n                                            (\n                                            f\n                                            \"\n                                            {\n                                            n\n                                            }\n                                            equals \n                                            {\n                                            x\n                                            }\n                                            * \n                                            {\n                                            n\n                                            //\n                                            x\n                                            }\n                                            \"\n                                            )\n                                            \n                                            break"
+            },
+            {
+              "concept": "The continue statement continues with the next iteration of the loop:",
+              "example": "for\n                                            num\n                                            in\n                                            range\n                                            (\n                                            2\n                                            ,\n                                            10\n                                            ):\n                                            \n                                            if\n                                            num\n                                            %\n                                            2\n                                            ==\n                                            0\n                                            :\n                                            \n                                            print\n                                            (\n                                            f\n                                            \"Found an even number \n                                            {\n                                            num\n                                            }\n                                            \"\n                                            )\n                                            \n                                            continue\n                                            \n                                            print\n                                            (\n                                            f\n                                            \"Found an odd number \n                                            {\n                                            num\n                                            }\n                                            \"\n                                            )"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "else-clauses-on-loops",
+            "section_number": "4.5.",
+            "section_title": "else Clauses on Loops"
+          },
+          "pairs": [
+            {
+              "concept": "4.5. else Clauses on Loops In a for or while loop the break statement may be paired with an else clause. If the loop finishes without executing the break , the else clause executes. In a for loop, the else clause is executed after the loop finishes its final iteration, that is, if no break occurred. In a while loop, it’s executed after the loop’s condition becomes false. In either kind of loop, the else clause is not executed if the loop was terminated by a break . Of course, other ways of ending the loop early, such as a return or a raised exception, will also skip execution of the else clause. This is exemplified in the following for loop, which searches for prime numbers:",
+              "example": "for\n                                            n\n                                            in\n                                            range\n                                            (\n                                            2\n                                            ,\n                                            10\n                                            ):\n                                            \n                                            for\n                                            x\n                                            in\n                                            range\n                                            (\n                                            2\n                                            ,\n                                            n\n                                            ):\n                                            \n                                            if\n                                            n\n                                            %\n                                            x\n                                            ==\n                                            0\n                                            :\n                                            \n                                            print\n                                            (\n                                            n\n                                            ,\n                                            'equals '\n                                            ,\n                                            x\n                                            ,\n                                            '*'\n                                            ,\n                                            n\n                                            //\n                                            x\n                                            )\n                                            \n                                            break\n                                            \n                                            else\n                                            :\n                                            \n                                            # loop fell through without finding a factor\n                                            \n                                            print\n                                            (\n                                            n\n                                            ,\n                                            'is a prime number '\n                                            )"
+            },
+            {
+              "concept": "(Yes, this is the correct code. Look closely: the else clause belongs to the for loop, not the if statement.) One way to think of the else clause is to imagine it paired with the if inside the loop. As the loop executes, it will run a sequence like if/if/if/else. The if is inside the loop, encountered a number of times. If the condition is ever true, a break will happen. If the condition is never true, the else clause outside the loop will execute. When used with a loop, the else clause has more in common with the else clause of a try statement than it does with that of if statements: a try statement’s else clause runs when no exception occurs, and a loop’s else clause runs when no break occurs. For more on the try statement and exceptions, see Handling Exceptions .",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "pass-statements",
+            "section_number": "4.6.",
+            "section_title": "pass Statements"
+          },
+          "pairs": [
+            {
+              "concept": "4.6. pass Statements The pass statement does nothing. It can be used when a statement is required syntactically but the program requires no action. For example:",
+              "example": "while\n                                            True\n                                            :\n                                            \n                                            pass\n                                            # Busy-wait for keyboard interrupt (Ctrl+C)"
+            },
+            {
+              "concept": "This is commonly used for creating minimal classes:",
+              "example": "class\n                                            \n                                            MyEmptyClass\n                                            :\n                                            \n                                            pass"
+            },
+            {
+              "concept": "Another place pass can be used is as a place-holder for a function or conditional body when you are working on new code, allowing you to keep thinking at a more abstract level. The pass is silently ignored:",
+              "example": "def\n                                            \n                                            initlog\n                                            (\n                                            *\n                                            args\n                                            ):\n                                            \n                                            pass\n                                            # Remember to implement this!"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "match-statements",
+            "section_number": "4.7.",
+            "section_title": "match Statements"
+          },
+          "pairs": [
+            {
+              "concept": "4.7. match Statements A match statement takes an expression and compares its value to successive patterns given as one or more case blocks. This is superficially similar to a switch statement in C, Java or JavaScript (and many other languages), but it’s more similar to pattern matching in languages like Rust or Haskell. Only the first pattern that matches gets executed and it can also extract components (sequence elements or object attributes) from the value into variables. The simplest form compares a subject value against one or more literals:",
+              "example": "def\n                                            \n                                            http_error\n                                            (\n                                            status\n                                            ):\n                                            match\n                                            status\n                                            :\n                                            case\n                                            400\n                                            :\n                                            return\n                                            \"Bad request \"\n                                            case\n                                            404\n                                            :\n                                            return\n                                            \"Not found \"\n                                            case\n                                            418\n                                            :\n                                            return\n                                            \"I 'm a teapot \"\n                                            case\n                                            \n                                            _\n                                            :\n                                            return\n                                            \"Something 's wrong with the internet \""
+            },
+            {
+              "concept": "Note the last block: the “variable name” _ acts as a wildcard and never fails to match. If no case matches, none of the branches is executed. You can combine several literals in a single pattern using | (“or”):",
+              "example": "case\n                                            401\n                                            |\n                                            403\n                                            |\n                                            404\n                                            :\n                                            return\n                                            \"Not allowed \""
+            },
+            {
+              "concept": "Patterns can look like unpacking assignments, and can be used to bind variables:",
+              "example": "# point is an (x, y) tuple\n                                            match\n                                            point\n                                            :\n                                            case\n                                            (\n                                            0\n                                            ,\n                                            0\n                                            ):\n                                            print\n                                            (\n                                            \"Origin \"\n                                            )\n                                            case\n                                            (\n                                            0\n                                            ,\n                                            y\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"Y=\n                                            {\n                                            y\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            (\n                                            x\n                                            ,\n                                            0\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"X=\n                                            {\n                                            x\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            (\n                                            x\n                                            ,\n                                            y\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"X=\n                                            {\n                                            x\n                                            }\n                                            , Y=\n                                            {\n                                            y\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            \n                                            _\n                                            :\n                                            raise\n                                            ValueError\n                                            (\n                                            \"Not a point \"\n                                            )"
+            },
+            {
+              "concept": "Study that one carefully! The first pattern has two literals, and can be thought of as an extension of the literal pattern shown above. But the next two patterns combine a literal and a variable, and the variable binds a value from the subject ( point ). The fourth pattern captures two values, which makes it conceptually similar to the unpacking assignment (x, y) = point . If you are using classes to structure your data you can use the class name followed by an argument list resembling a constructor, but with the ability to capture attributes into variables:",
+              "example": "class\n                                            \n                                            Point\n                                            :\n                                            def\n                                            \n                                            __init__\n                                            (\n                                            self\n                                            ,\n                                            x\n                                            ,\n                                            y\n                                            ):\n                                            self\n                                            .\n                                            x\n                                            =\n                                            x\n                                            self\n                                            .\n                                            y\n                                            =\n                                            y\n                                            def\n                                            \n                                            where_is\n                                            (\n                                            point\n                                            ):\n                                            match\n                                            point\n                                            :\n                                            case\n                                            Point\n                                            (\n                                            x\n                                            =\n                                            0\n                                            ,\n                                            y\n                                            =\n                                            0\n                                            ):\n                                            print\n                                            (\n                                            \"Origin \"\n                                            )\n                                            case\n                                            Point\n                                            (\n                                            x\n                                            =\n                                            0\n                                            ,\n                                            y\n                                            =\n                                            y\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"Y=\n                                            {\n                                            y\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            Point\n                                            (\n                                            x\n                                            =\n                                            x\n                                            ,\n                                            y\n                                            =\n                                            0\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"X=\n                                            {\n                                            x\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            Point\n                                            ():\n                                            print\n                                            (\n                                            \"Somewhere else \"\n                                            )\n                                            case\n                                            \n                                            _\n                                            :\n                                            print\n                                            (\n                                            \"Not a point \"\n                                            )"
+            },
+            {
+              "concept": "You can use positional parameters with some builtin classes that provide an ordering for their attributes (e.g. dataclasses). You can also define a specific position for attributes in patterns by setting the __match_args__ special attribute in your classes. If it’s set to (“x”, “y”), the following patterns are all equivalent (and all bind the y attribute to the var variable):",
+              "example": "Point\n                                            (\n                                            1\n                                            ,\n                                            var\n                                            )\n                                            Point\n                                            (\n                                            1\n                                            ,\n                                            y\n                                            =\n                                            var\n                                            )\n                                            Point\n                                            (\n                                            x\n                                            =\n                                            1\n                                            ,\n                                            y\n                                            =\n                                            var\n                                            )\n                                            Point\n                                            (\n                                            y\n                                            =\n                                            var\n                                            ,\n                                            x\n                                            =\n                                            1\n                                            )"
+            },
+            {
+              "concept": "A recommended way to read patterns is to look at them as an extended form of what you would put on the left of an assignment, to understand which variables would be set to what. Only the standalone names (like var above) are assigned to by a match statement. Dotted names (like foo.bar ), attribute names (the x= and y= above) or class names (recognized by the “(…)” next to them like Point above) are never assigned to. Patterns can be arbitrarily nested. For example, if we have a short list of Points, with __match_args__ added, we could match it like this:",
+              "example": "class\n                                            \n                                            Point\n                                            :\n                                            __match_args__\n                                            =\n                                            (\n                                            'x '\n                                            ,\n                                            'y '\n                                            )\n                                            def\n                                            \n                                            __init__\n                                            (\n                                            self\n                                            ,\n                                            x\n                                            ,\n                                            y\n                                            ):\n                                            self\n                                            .\n                                            x\n                                            =\n                                            x\n                                            self\n                                            .\n                                            y\n                                            =\n                                            y\n                                            match\n                                            points\n                                            :\n                                            case\n                                            []:\n                                            print\n                                            (\n                                            \"No points \"\n                                            )\n                                            case\n                                            [\n                                            Point\n                                            (\n                                            0\n                                            ,\n                                            0\n                                            )]:\n                                            print\n                                            (\n                                            \"The origin \"\n                                            )\n                                            case\n                                            [\n                                            Point\n                                            (\n                                            x\n                                            ,\n                                            y\n                                            )]:\n                                            print\n                                            (\n                                            f\n                                            \"Single point \n                                            {\n                                            x\n                                            }\n                                            , \n                                            {\n                                            y\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            [\n                                            Point\n                                            (\n                                            0\n                                            ,\n                                            y1\n                                            ),\n                                            Point\n                                            (\n                                            0\n                                            ,\n                                            y2\n                                            )]:\n                                            print\n                                            (\n                                            f\n                                            \"Two on the Y axis at \n                                            {\n                                            y1\n                                            }\n                                            , \n                                            {\n                                            y2\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            \n                                            _\n                                            :\n                                            print\n                                            (\n                                            \"Something else \"\n                                            )"
+            },
+            {
+              "concept": "We can add an if clause to a pattern, known as a “guard”. If the guard is false, match goes on to try the next case block. Note that value capture happens before the guard is evaluated:",
+              "example": "match\n                                            point\n                                            :\n                                            case\n                                            Point\n                                            (\n                                            x\n                                            ,\n                                            y\n                                            )\n                                            if\n                                            x\n                                            ==\n                                            y\n                                            :\n                                            print\n                                            (\n                                            f\n                                            \"Y=X at \n                                            {\n                                            x\n                                            }\n                                            \"\n                                            )\n                                            case\n                                            Point\n                                            (\n                                            x\n                                            ,\n                                            y\n                                            ):\n                                            print\n                                            (\n                                            f\n                                            \"Not on the diagonal \"\n                                            )"
+            },
+            {
+              "concept": "Several other key features of this statement: Like unpacking assignments, tuple and list patterns have exactly the same meaning and actually match arbitrary sequences. An important exception is that they don’t match iterators or strings. Sequence patterns support extended unpacking: [x, y, *rest] and (x, y, *rest) work similar to unpacking assignments. The name after * may also be _ , so (x, y, *_) matches a sequence of at least two items without binding the remaining items. Mapping patterns: {\"bandwidth \": b, \"latency \": l} captures the \"bandwidth \" and \"latency \" values from a dictionary. Unlike sequence patterns, extra keys are ignored. An unpacking like **rest is also supported. (But **_ would be redundant, so it is not allowed.) Subpatterns may be captured using the as keyword: case ( Point ( x1 , y1 ), Point ( x2 , y2 ) as p2 ): ... will capture the second element of the input as p2 (as long as the input is a sequence of two points) Most literals are compared by equality, however the singletons True , False and None are compared by identity. Patterns may use named constants. These must be dotted names to prevent them from being interpreted as capture variable: from enum import Enum class Color ( Enum ): RED = 'red ' GREEN = 'green ' BLUE = 'blue ' color = Color ( input ( \"Enter your choice of 'red ', 'blue 'or 'green ': \" )) match color : case Color . RED : print ( \"I see red!\" ) case Color . GREEN : print ( \"Grass is green \" ) case Color . BLUE : print ( \"I 'm feeling the blues :(\" ) For a more detailed explanation and additional examples, you can look into PEP 636 which is written in a tutorial format.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "defining-functions",
+            "section_number": "4.8.",
+            "section_title": "Defining Functions"
+          },
+          "pairs": [
+            {
+              "concept": "4.8. Defining Functions We can create a function that writes the Fibonacci series to an arbitrary boundary:",
+              "example": "def\n                                            \n                                            fib\n                                            (\n                                            n\n                                            ):\n                                            # write Fibonacci series less than n\n                                            \n                                            \n                                            \"\"\"Print a Fibonacci series less than n.\"\"\"\n                                            \n                                            a\n                                            ,\n                                            b\n                                            =\n                                            0\n                                            ,\n                                            1\n                                            \n                                            while\n                                            a\n                                            <\n                                            n\n                                            :\n                                            \n                                            print\n                                            (\n                                            a\n                                            ,\n                                            end\n                                            =\n                                            ''\n                                            )\n                                            \n                                            a\n                                            ,\n                                            b\n                                            =\n                                            b\n                                            ,\n                                            a\n                                            +\n                                            b\n                                            \n                                            print\n                                            ()\n                                            \n                                            \n                                            # Now call the function we just defined:\n                                            \n                                            fib\n                                            (\n                                            2000\n                                            )"
+            },
+            {
+              "concept": "The keyword def introduces a function definition . It must be followed by the function name and the parenthesized list of formal parameters. The statements that form the body of the function start at the next line, and must be indented. The first statement of the function body can optionally be a string literal; this string literal is the function’s documentation string, or docstring . (More about docstrings can be found in the section Documentation Strings .) There are tools which use docstrings to automatically produce online or printed documentation, or to let the user interactively browse through code; it’s good practice to include docstrings in code that you write, so make a habit of it. The execution of a function introduces a new symbol table used for the local variables of the function. More precisely, all variable assignments in a function store the value in the local symbol table; whereas variable references first look in the local symbol table, then in the local symbol tables of enclosing functions, then in the global symbol table, and finally in the table of built-in names. Thus, global variables and variables of enclosing functions cannot be directly assigned a value within a function (unless, for global variables, named in a global statement, or, for variables of enclosing functions, named in a nonlocal statement), although they may be referenced. The actual parameters (arguments) to a function call are introduced in the local symbol table of the called function when it is called; thus, arguments are passed using call by value (where the value is always an object reference , not the value of the object). [ 1 ] When a function calls another function, or calls itself recursively, a new local symbol table is created for that call. A function definition associates the function name with the function object in the current symbol table. The interpreter recognizes the object pointed to by that name as a user-defined function. Other names can also point to that same function object and can also be used to access the function:",
+              "example": "fib\n                                            \n                                            \n                                            f\n                                            =\n                                            fib\n                                            \n                                            f\n                                            (\n                                            100\n                                            )"
+            },
+            {
+              "concept": "Coming from other languages, you might object that fib is not a function but a procedure since it doesn’t return a value. In fact, even functions without a return statement do return a value, albeit a rather boring one. This value is called None (it’s a built-in name). Writing the value None is normally suppressed by the interpreter if it would be the only value written. You can see it if you really want to using print() :",
+              "example": "fib\n                                            (\n                                            0\n                                            )\n                                            \n                                            print\n                                            (\n                                            fib\n                                            (\n                                            0\n                                            ))"
+            },
+            {
+              "concept": "It is simple to write a function that returns a list of the numbers of the Fibonacci series, instead of printing it:",
+              "example": "def\n                                            \n                                            fib2\n                                            (\n                                            n\n                                            ):\n                                            # return Fibonacci series up to n\n                                            \n                                            \n                                            \"\"\"Return a list containing the Fibonacci series up to n.\"\"\"\n                                            \n                                            result\n                                            =\n                                            []\n                                            \n                                            a\n                                            ,\n                                            b\n                                            =\n                                            0\n                                            ,\n                                            1\n                                            \n                                            while\n                                            a\n                                            <\n                                            n\n                                            :\n                                            \n                                            result\n                                            .\n                                            append\n                                            (\n                                            a\n                                            )\n                                            # see below\n                                            \n                                            a\n                                            ,\n                                            b\n                                            =\n                                            b\n                                            ,\n                                            a\n                                            +\n                                            b\n                                            \n                                            return\n                                            result\n                                            \n                                            \n                                            f100\n                                            =\n                                            fib2\n                                            (\n                                            100\n                                            )\n                                            # call it\n                                            \n                                            f100\n                                            # write the result"
+            },
+            {
+              "concept": "This example, as usual, demonstrates some new Python features: The return statement returns with a value from a function. return without an expression argument returns None . Falling off the end of a function also returns None . The statement result.append(a) calls a method of the list object result . A method is a function that ‘belongs’ to an object and is named obj.methodname , where obj is some object (this may be an expression), and methodname is the name of a method that is defined by the object’s type. Different types define different methods. Methods of different types may have the same name without causing ambiguity. (It is possible to define your own object types and methods, using classes , see Classes ) The method append() shown in the example is defined for list objects; it adds a new element at the end of the list. In this example it is equivalent to result = result + [a] , but more efficient.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "more-on-defining-functions",
+            "section_number": "4.9.",
+            "section_title": "More on Defining Functions"
+          },
+          "pairs": [
+            {
+              "concept": "4.9. More on Defining Functions It is also possible to define functions with a variable number of arguments. There are three forms, which can be combined.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "default-argument-values",
+            "section_number": "4.9.1.",
+            "section_title": "Default Argument Values"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.1. Default Argument Values The most useful form is to specify a default value for one or more arguments. This creates a function that can be called with fewer arguments than it is defined to allow. For example:",
+              "example": "def\n                                                \n                                                ask_ok\n                                                (\n                                                prompt\n                                                ,\n                                                retries\n                                                =\n                                                4\n                                                ,\n                                                reminder\n                                                =\n                                                'Please try again!'\n                                                ):\n                                                while\n                                                True\n                                                :\n                                                reply\n                                                =\n                                                input\n                                                (\n                                                prompt\n                                                )\n                                                if\n                                                reply\n                                                in\n                                                {\n                                                'y '\n                                                ,\n                                                'ye '\n                                                ,\n                                                'yes '\n                                                }:\n                                                return\n                                                True\n                                                if\n                                                reply\n                                                in\n                                                {\n                                                'n '\n                                                ,\n                                                'no '\n                                                ,\n                                                'nop '\n                                                ,\n                                                'nope '\n                                                }:\n                                                return\n                                                False\n                                                retries\n                                                =\n                                                retries\n                                                -\n                                                1\n                                                if\n                                                retries\n                                                <\n                                                0\n                                                :\n                                                raise\n                                                ValueError\n                                                (\n                                                'invalid user response '\n                                                )\n                                                print\n                                                (\n                                                reminder\n                                                )"
+            },
+            {
+              "concept": "This function can be called in several ways: giving only the mandatory argument: ask_ok('Do you really want to quit?') giving one of the optional arguments: ask_ok('OK to overwrite the file?', 2) or even giving all arguments: ask_ok('OK to overwrite the file?', 2, 'Come on, only yes or no!') This example also introduces the in keyword. This tests whether or not a sequence contains a certain value. The default values are evaluated at the point of function definition in the defining scope, so that",
+              "example": "i\n                                                =\n                                                5\n                                                def\n                                                \n                                                f\n                                                (\n                                                arg\n                                                =\n                                                i\n                                                ):\n                                                print\n                                                (\n                                                arg\n                                                )\n                                                i\n                                                =\n                                                6\n                                                f\n                                                ()"
+            },
+            {
+              "concept": "will print 5 . Important warning: The default value is evaluated only once. This makes a difference when the default is a mutable object such as a list, dictionary, or instances of most classes. For example, the following function accumulates the arguments passed to it on subsequent calls:",
+              "example": "def\n                                                \n                                                f\n                                                (\n                                                a\n                                                ,\n                                                L\n                                                =\n                                                []):\n                                                L\n                                                .\n                                                append\n                                                (\n                                                a\n                                                )\n                                                return\n                                                L\n                                                print\n                                                (\n                                                f\n                                                (\n                                                1\n                                                ))\n                                                print\n                                                (\n                                                f\n                                                (\n                                                2\n                                                ))\n                                                print\n                                                (\n                                                f\n                                                (\n                                                3\n                                                ))"
+            },
+            {
+              "concept": "This will print",
+              "example": "[\n                                                1\n                                                ]\n                                                [\n                                                1\n                                                ,\n                                                2\n                                                ]\n                                                [\n                                                1\n                                                ,\n                                                2\n                                                ,\n                                                3\n                                                ]"
+            },
+            {
+              "concept": "If you don’t want the default to be shared between subsequent calls, you can write the function like this instead:",
+              "example": "def\n                                                \n                                                f\n                                                (\n                                                a\n                                                ,\n                                                L\n                                                =\n                                                None\n                                                ):\n                                                if\n                                                L\n                                                is\n                                                None\n                                                :\n                                                L\n                                                =\n                                                []\n                                                L\n                                                .\n                                                append\n                                                (\n                                                a\n                                                )\n                                                return\n                                                L"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "keyword-arguments",
+            "section_number": "4.9.2.",
+            "section_title": "Keyword Arguments"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.2. Keyword Arguments Functions can also be called using keyword arguments of the form kwarg=value . For instance, the following function:",
+              "example": "def\n                                                \n                                                parrot\n                                                (\n                                                voltage\n                                                ,\n                                                state\n                                                =\n                                                'a stiff '\n                                                ,\n                                                action\n                                                =\n                                                'voom '\n                                                ,\n                                                type\n                                                =\n                                                'Norwegian Blue '\n                                                ):\n                                                print\n                                                (\n                                                \"-- This parrot wouldn 't \"\n                                                ,\n                                                action\n                                                ,\n                                                end\n                                                =\n                                                ''\n                                                )\n                                                print\n                                                (\n                                                \"if you put \"\n                                                ,\n                                                voltage\n                                                ,\n                                                \"volts through it.\"\n                                                )\n                                                print\n                                                (\n                                                \"-- Lovely plumage, the \"\n                                                ,\n                                                type\n                                                )\n                                                print\n                                                (\n                                                \"-- It 's \"\n                                                ,\n                                                state\n                                                ,\n                                                \"!\"\n                                                )"
+            },
+            {
+              "concept": "accepts one required argument ( voltage ) and three optional arguments ( state , action , and type ). This function can be called in any of the following ways:",
+              "example": "parrot\n                                                (\n                                                1000\n                                                )\n                                                # 1 positional argument\n                                                parrot\n                                                (\n                                                voltage\n                                                =\n                                                1000\n                                                )\n                                                # 1 keyword argument\n                                                parrot\n                                                (\n                                                voltage\n                                                =\n                                                1000000\n                                                ,\n                                                action\n                                                =\n                                                'VOOOOOM '\n                                                )\n                                                # 2 keyword arguments\n                                                parrot\n                                                (\n                                                action\n                                                =\n                                                'VOOOOOM '\n                                                ,\n                                                voltage\n                                                =\n                                                1000000\n                                                )\n                                                # 2 keyword arguments\n                                                parrot\n                                                (\n                                                'a million '\n                                                ,\n                                                'bereft of life '\n                                                ,\n                                                'jump '\n                                                )\n                                                # 3 positional arguments\n                                                parrot\n                                                (\n                                                'a thousand '\n                                                ,\n                                                state\n                                                =\n                                                'pushing up the daisies '\n                                                )\n                                                # 1 positional, 1 keyword"
+            },
+            {
+              "concept": "but all the following calls would be invalid:",
+              "example": "parrot\n                                                ()\n                                                # required argument missing\n                                                parrot\n                                                (\n                                                voltage\n                                                =\n                                                5.0\n                                                ,\n                                                'dead '\n                                                )\n                                                # non-keyword argument after a keyword argument\n                                                parrot\n                                                (\n                                                110\n                                                ,\n                                                voltage\n                                                =\n                                                220\n                                                )\n                                                # duplicate value for the same argument\n                                                parrot\n                                                (\n                                                actor\n                                                =\n                                                'John Cleese '\n                                                )\n                                                # unknown keyword argument"
+            },
+            {
+              "concept": "In a function call, keyword arguments must follow positional arguments. All the keyword arguments passed must match one of the arguments accepted by the function (e.g. actor is not a valid argument for the parrot function), and their order is not important. This also includes non-optional arguments (e.g. parrot(voltage=1000) is valid too). No argument may receive a value more than once. Here’s an example that fails due to this restriction:",
+              "example": "def\n                                                \n                                                function\n                                                (\n                                                a\n                                                ):\n                                                \n                                                pass\n                                                \n                                                \n                                                function\n                                                (\n                                                0\n                                                ,\n                                                a\n                                                =\n                                                0\n                                                )\n                                                Traceback (most recent call last):\n                                                File \"<stdin >\"\n                                                , line 1\n                                                , in <module >\n                                                TypeError\n                                                : function() got multiple values for argument 'a '"
+            },
+            {
+              "concept": "When a final formal parameter of the form **name is present, it receives a dictionary (see Mapping Types — dict ) containing all keyword arguments except for those corresponding to a formal parameter. This may be combined with a formal parameter of the form *name (described in the next subsection) which receives a tuple containing the positional arguments beyond the formal parameter list. ( *name must occur before **name .) For example, if we define a function like this:",
+              "example": "def\n                                                \n                                                cheeseshop\n                                                (\n                                                kind\n                                                ,\n                                                *\n                                                arguments\n                                                ,\n                                                **\n                                                keywords\n                                                ):\n                                                print\n                                                (\n                                                \"-- Do you have any \"\n                                                ,\n                                                kind\n                                                ,\n                                                \"?\"\n                                                )\n                                                print\n                                                (\n                                                \"-- I 'm sorry, we 're all out of \"\n                                                ,\n                                                kind\n                                                )\n                                                for\n                                                arg\n                                                in\n                                                arguments\n                                                :\n                                                print\n                                                (\n                                                arg\n                                                )\n                                                print\n                                                (\n                                                \"-\"\n                                                *\n                                                40\n                                                )\n                                                for\n                                                kw\n                                                in\n                                                keywords\n                                                :\n                                                print\n                                                (\n                                                kw\n                                                ,\n                                                \":\"\n                                                ,\n                                                keywords\n                                                [\n                                                kw\n                                                ])"
+            },
+            {
+              "concept": "It could be called like this:",
+              "example": "cheeseshop\n                                                (\n                                                \"Limburger \"\n                                                ,\n                                                \"It 's very runny, sir.\"\n                                                ,\n                                                \"It 's really very, VERY runny, sir.\"\n                                                ,\n                                                shopkeeper\n                                                =\n                                                \"Michael Palin \"\n                                                ,\n                                                client\n                                                =\n                                                \"John Cleese \"\n                                                ,\n                                                sketch\n                                                =\n                                                \"Cheese Shop Sketch \"\n                                                )"
+            },
+            {
+              "concept": "and of course it would print:",
+              "example": "-- Do you have any Limburger ?\n-- I 'm sorry, we 're all out of Limburger\nIt 's very runny, sir.\nIt 's really very, VERY runny, sir.\n----------------------------------------\nshopkeeper : Michael Palin\nclient : John Cleese\nsketch : Cheese Shop Sketch"
+            },
+            {
+              "concept": "Note that the order in which the keyword arguments are printed is guaranteed to match the order in which they were provided in the function call.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "special-parameters",
+            "section_number": "4.9.3.",
+            "section_title": "Special parameters"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3. Special parameters By default, arguments may be passed to a Python function either by position or explicitly by keyword. For readability and performance, it makes sense to restrict the way arguments can be passed so that a developer need only look at the function definition to determine if items are passed by position, by position or keyword, or by keyword. A function definition may look like:",
+              "example": "def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):\n      -----------    ----------     ----------\n        |             |                  |\n        |        Positional or keyword   |\n        |                                - Keyword only\n         -- Positional only"
+            },
+            {
+              "concept": "where / and * are optional. If used, these symbols indicate the kind of parameter by how the arguments may be passed to the function: positional-only, positional-or-keyword, and keyword-only. Keyword parameters are also referred to as named parameters.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "positional-or-keyword-arguments",
+            "section_number": "4.9.3.1.",
+            "section_title": "Positional-or-Keyword Arguments"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3.1. Positional-or-Keyword Arguments If / and * are not present in the function definition, arguments may be passed to a function by position or by keyword.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "positional-only-parameters",
+            "section_number": "4.9.3.2.",
+            "section_title": "Positional-Only Parameters"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3.2. Positional-Only Parameters Looking at this in a bit more detail, it is possible to mark certain parameters as positional-only . If positional-only , the parameters’ order matters, and the parameters cannot be passed by keyword. Positional-only parameters are placed before a / (forward-slash). The / is used to logically separate the positional-only parameters from the rest of the parameters. If there is no / in the function definition, there are no positional-only parameters. Parameters following the / may be positional-or-keyword or keyword-only .",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "keyword-only-arguments",
+            "section_number": "4.9.3.3.",
+            "section_title": "Keyword-Only Arguments"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3.3. Keyword-Only Arguments To mark parameters as keyword-only , indicating the parameters must be passed by keyword argument, place an * in the arguments list just before the first keyword-only parameter.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "function-examples",
+            "section_number": "4.9.3.4.",
+            "section_title": "Function Examples"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3.4. Function Examples Consider the following example function definitions paying close attention to the markers / and * :",
+              "example": "def\n                                                    \n                                                    standard_arg\n                                                    (\n                                                    arg\n                                                    ):\n                                                    \n                                                    print\n                                                    (\n                                                    arg\n                                                    )\n                                                    \n                                                    \n                                                    def\n                                                    \n                                                    pos_only_arg\n                                                    (\n                                                    arg\n                                                    ,\n                                                    /\n                                                    ):\n                                                    \n                                                    print\n                                                    (\n                                                    arg\n                                                    )\n                                                    \n                                                    \n                                                    def\n                                                    \n                                                    kwd_only_arg\n                                                    (\n                                                    *\n                                                    ,\n                                                    arg\n                                                    ):\n                                                    \n                                                    print\n                                                    (\n                                                    arg\n                                                    )\n                                                    \n                                                    \n                                                    def\n                                                    \n                                                    combined_example\n                                                    (\n                                                    pos_only\n                                                    ,\n                                                    /\n                                                    ,\n                                                    standard\n                                                    ,\n                                                    *\n                                                    ,\n                                                    kwd_only\n                                                    ):\n                                                    \n                                                    print\n                                                    (\n                                                    pos_only\n                                                    ,\n                                                    standard\n                                                    ,\n                                                    kwd_only\n                                                    )"
+            },
+            {
+              "concept": "The first function definition, standard_arg , the most familiar form, places no restrictions on the calling convention and arguments may be passed by position or keyword:",
+              "example": "standard_arg\n                                                    (\n                                                    2\n                                                    )\n                                                    \n                                                    \n                                                    standard_arg\n                                                    (\n                                                    arg\n                                                    =\n                                                    2\n                                                    )"
+            },
+            {
+              "concept": "The second function pos_only_arg is restricted to only use positional parameters as there is a / in the function definition:",
+              "example": "pos_only_arg\n                                                    (\n                                                    1\n                                                    )\n                                                    \n                                                    \n                                                    pos_only_arg\n                                                    (\n                                                    arg\n                                                    =\n                                                    1\n                                                    )\n                                                    Traceback (most recent call last):\n                                                    File \"<stdin >\"\n                                                    , line 1\n                                                    , in <module >\n                                                    TypeError\n                                                    : pos_only_arg() got some positional-only arguments passed as keyword arguments: 'arg '"
+            },
+            {
+              "concept": "The third function kwd_only_arg only allows keyword arguments as indicated by a * in the function definition:",
+              "example": "kwd_only_arg\n                                                    (\n                                                    3\n                                                    )\n                                                    Traceback (most recent call last):\n                                                    File \"<stdin >\"\n                                                    , line 1\n                                                    , in <module >\n                                                    TypeError\n                                                    : kwd_only_arg() takes 0 positional arguments but 1 was given\n                                                    \n                                                    kwd_only_arg\n                                                    (\n                                                    arg\n                                                    =\n                                                    3\n                                                    )"
+            },
+            {
+              "concept": "And the last uses all three calling conventions in the same function definition:",
+              "example": "combined_example\n                                                    (\n                                                    1\n                                                    ,\n                                                    2\n                                                    ,\n                                                    3\n                                                    )\n                                                    Traceback (most recent call last):\n                                                    File \"<stdin >\"\n                                                    , line 1\n                                                    , in <module >\n                                                    TypeError\n                                                    : combined_example() takes 2 positional arguments but 3 were given\n                                                    \n                                                    combined_example\n                                                    (\n                                                    1\n                                                    ,\n                                                    2\n                                                    ,\n                                                    kwd_only\n                                                    =\n                                                    3\n                                                    )\n                                                    \n                                                    \n                                                    combined_example\n                                                    (\n                                                    1\n                                                    ,\n                                                    standard\n                                                    =\n                                                    2\n                                                    ,\n                                                    kwd_only\n                                                    =\n                                                    3\n                                                    )\n                                                    \n                                                    \n                                                    combined_example\n                                                    (\n                                                    pos_only\n                                                    =\n                                                    1\n                                                    ,\n                                                    standard\n                                                    =\n                                                    2\n                                                    ,\n                                                    kwd_only\n                                                    =\n                                                    3\n                                                    )\n                                                    Traceback (most recent call last):\n                                                    File \"<stdin >\"\n                                                    , line 1\n                                                    , in <module >\n                                                    TypeError\n                                                    : combined_example() got some positional-only arguments passed as keyword arguments: 'pos_only '"
+            },
+            {
+              "concept": "Finally, consider this function definition which has a potential collision between the positional argument name and **kwds which has name as a key:",
+              "example": "def\n                                                    \n                                                    foo\n                                                    (\n                                                    name\n                                                    ,\n                                                    **\n                                                    kwds\n                                                    ):\n                                                    return\n                                                    'name '\n                                                    in\n                                                    kwds"
+            },
+            {
+              "concept": "There is no possible call that will make it return True as the keyword 'name' will always bind to the first parameter. For example:",
+              "example": "foo\n                                                    (\n                                                    1\n                                                    ,\n                                                    **\n                                                    {\n                                                    'name '\n                                                    :\n                                                    2\n                                                    })\n                                                    Traceback (most recent call last):\n                                                    File \"<stdin >\"\n                                                    , line 1\n                                                    , in <module >\n                                                    TypeError\n                                                    : foo() got multiple values for argument 'name '"
+            },
+            {
+              "concept": "But using / (positional only arguments), it is possible since it allows name as a positional argument and 'name' as a key in the keyword arguments:",
+              "example": "def\n                                                    \n                                                    foo\n                                                    (\n                                                    name\n                                                    ,\n                                                    /\n                                                    ,\n                                                    **\n                                                    kwds\n                                                    ):\n                                                    \n                                                    return\n                                                    'name '\n                                                    in\n                                                    kwds\n                                                    \n                                                    \n                                                    foo\n                                                    (\n                                                    1\n                                                    ,\n                                                    **\n                                                    {\n                                                    'name '\n                                                    :\n                                                    2\n                                                    })"
+            },
+            {
+              "concept": "In other words, the names of positional-only parameters can be used in **kwds without ambiguity.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "recap",
+            "section_number": "4.9.3.5.",
+            "section_title": "Recap"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.3.5. Recap The use case will determine which parameters to use in the function definition:",
+              "example": "def\n                                                    \n                                                    f\n                                                    (\n                                                    pos1\n                                                    ,\n                                                    pos2\n                                                    ,\n                                                    /\n                                                    ,\n                                                    pos_or_kwd\n                                                    ,\n                                                    *\n                                                    ,\n                                                    kwd1\n                                                    ,\n                                                    kwd2\n                                                    ):"
+            },
+            {
+              "concept": "As guidance: Use positional-only if you want the name of the parameters to not be available to the user. This is useful when parameter names have no real meaning, if you want to enforce the order of the arguments when the function is called or if you need to take some positional parameters and arbitrary keywords. Use keyword-only when names have meaning and the function definition is more understandable by being explicit with names or you want to prevent users relying on the position of the argument being passed. For an API, use positional-only to prevent breaking API changes if the parameter’s name is modified in the future.",
+              "example": ""
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "arbitrary-argument-lists",
+            "section_number": "4.9.4.",
+            "section_title": "Arbitrary Argument Lists"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.4. Arbitrary Argument Lists Finally, the least frequently used option is to specify that a function can be called with an arbitrary number of arguments. These arguments will be wrapped up in a tuple (see Tuples and Sequences ). Before the variable number of arguments, zero or more normal arguments may occur.",
+              "example": "def\n                                                \n                                                write_multiple_items\n                                                (\n                                                file\n                                                ,\n                                                separator\n                                                ,\n                                                *\n                                                args\n                                                ):\n                                                file\n                                                .\n                                                write\n                                                (\n                                                separator\n                                                .\n                                                join\n                                                (\n                                                args\n                                                ))"
+            },
+            {
+              "concept": "Normally, these variadic arguments will be last in the list of formal parameters, because they scoop up all remaining input arguments that are passed to the function. Any formal parameters which occur after the *args parameter are ‘keyword-only’ arguments, meaning that they can only be used as keywords rather than positional arguments.",
+              "example": "def\n                                                \n                                                concat\n                                                (\n                                                *\n                                                args\n                                                ,\n                                                sep\n                                                =\n                                                \"/\"\n                                                ):\n                                                \n                                                return\n                                                sep\n                                                .\n                                                join\n                                                (\n                                                args\n                                                )\n                                                \n                                                \n                                                concat\n                                                (\n                                                \"earth \"\n                                                ,\n                                                \"mars \"\n                                                ,\n                                                \"venus \"\n                                                )\n                                                \n                                                \n                                                concat\n                                                (\n                                                \"earth \"\n                                                ,\n                                                \"mars \"\n                                                ,\n                                                \"venus \"\n                                                ,\n                                                sep\n                                                =\n                                                \".\"\n                                                )"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "unpacking-argument-lists",
+            "section_number": "4.9.5.",
+            "section_title": "Unpacking Argument Lists"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.5. Unpacking Argument Lists The reverse situation occurs when the arguments are already in a list or tuple but need to be unpacked for a function call requiring separate positional arguments. For instance, the built-in range() function expects separate start and stop arguments. If they are not available separately, write the function call with the * -operator to unpack the arguments out of a list or tuple:",
+              "example": "list\n                                                (\n                                                range\n                                                (\n                                                3\n                                                ,\n                                                6\n                                                ))\n                                                # normal call with separate arguments\n                                                \n                                                \n                                                args\n                                                =\n                                                [\n                                                3\n                                                ,\n                                                6\n                                                ]\n                                                \n                                                list\n                                                (\n                                                range\n                                                (\n                                                *\n                                                args\n                                                ))\n                                                # call with arguments unpacked from a list"
+            },
+            {
+              "concept": "In the same fashion, dictionaries can deliver keyword arguments with the ** -operator:",
+              "example": "def\n                                                \n                                                parrot\n                                                (\n                                                voltage\n                                                ,\n                                                state\n                                                =\n                                                'a stiff '\n                                                ,\n                                                action\n                                                =\n                                                'voom '\n                                                ):\n                                                \n                                                print\n                                                (\n                                                \"-- This parrot wouldn 't \"\n                                                ,\n                                                action\n                                                ,\n                                                end\n                                                =\n                                                ''\n                                                )\n                                                \n                                                print\n                                                (\n                                                \"if you put \"\n                                                ,\n                                                voltage\n                                                ,\n                                                \"volts through it.\"\n                                                ,\n                                                end\n                                                =\n                                                ''\n                                                )\n                                                \n                                                print\n                                                (\n                                                \"E 's \"\n                                                ,\n                                                state\n                                                ,\n                                                \"!\"\n                                                )\n                                                \n                                                \n                                                d\n                                                =\n                                                {\n                                                \"voltage \"\n                                                :\n                                                \"four million \"\n                                                ,\n                                                \"state \"\n                                                :\n                                                \"bleedin 'demised \"\n                                                ,\n                                                \"action \"\n                                                :\n                                                \"VOOM \"\n                                                }\n                                                \n                                                parrot\n                                                (\n                                                **\n                                                d\n                                                )"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "lambda-expressions",
+            "section_number": "4.9.6.",
+            "section_title": "Lambda Expressions"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.6. Lambda Expressions Small anonymous functions can be created with the lambda keyword. This function returns the sum of its two arguments: lambda a, b: a+b . Lambda functions can be used wherever function objects are required. They are syntactically restricted to a single expression. Semantically, they are just syntactic sugar for a normal function definition. Like nested function definitions, lambda functions can reference variables from the containing scope:",
+              "example": "def\n                                                \n                                                make_incrementor\n                                                (\n                                                n\n                                                ):\n                                                \n                                                return\n                                                lambda\n                                                x\n                                                :\n                                                x\n                                                +\n                                                n\n                                                \n                                                \n                                                f\n                                                =\n                                                make_incrementor\n                                                (\n                                                42\n                                                )\n                                                \n                                                f\n                                                (\n                                                0\n                                                )\n                                                \n                                                \n                                                f\n                                                (\n                                                1\n                                                )"
+            },
+            {
+              "concept": "The above example uses a lambda expression to return a function. Another use is to pass a small function as an argument. For instance, list.sort() takes a sorting key function key which can be a lambda function:",
+              "example": "pairs\n                                                =\n                                                [(\n                                                1\n                                                ,\n                                                'one '\n                                                ),\n                                                (\n                                                2\n                                                ,\n                                                'two '\n                                                ),\n                                                (\n                                                3\n                                                ,\n                                                'three '\n                                                ),\n                                                (\n                                                4\n                                                ,\n                                                'four '\n                                                )]\n                                                \n                                                pairs\n                                                .\n                                                sort\n                                                (\n                                                key\n                                                =\n                                                lambda\n                                                pair\n                                                :\n                                                pair\n                                                [\n                                                1\n                                                ])\n                                                \n                                                pairs"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "documentation-strings",
+            "section_number": "4.9.7.",
+            "section_title": "Documentation Strings"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.7. Documentation Strings Here are some conventions about the content and formatting of documentation strings. The first line should always be a short, concise summary of the object’s purpose. For brevity, it should not explicitly state the object’s name or type, since these are available by other means (except if the name happens to be a verb describing a function’s operation). This line should begin with a capital letter and end with a period. If there are more lines in the documentation string, the second line should be blank, visually separating the summary from the rest of the description. The following lines should be one or more paragraphs describing the object’s calling conventions, its side effects, etc. The Python parser does not strip indentation from multi-line string literals in Python, so tools that process documentation have to strip indentation if desired. This is done using the following convention. The first non-blank line after the first line of the string determines the amount of indentation for the entire documentation string. (We can’t use the first line since it is generally adjacent to the string’s opening quotes so its indentation is not apparent in the string literal.) Whitespace “equivalent” to this indentation is then stripped from the start of all lines of the string. Lines that are indented less should not occur, but if they occur all their leading whitespace should be stripped. Equivalence of whitespace should be tested after expansion of tabs (to 8 spaces, normally). Here is an example of a multi-line docstring:",
+              "example": "def\n                                                \n                                                my_function\n                                                ():\n                                                \n                                                \n                                                \"\"\"Do nothing, but document it.\n                                                \n                                                \n                                                No, really, it doesn 't do anything.\n                                                \n                                                \"\"\"\n                                                \n                                                pass\n                                                \n                                                \n                                                print\n                                                (\n                                                my_function\n                                                .\n                                                __doc__\n                                                )"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "function-annotations",
+            "section_number": "4.9.8.",
+            "section_title": "Function Annotations"
+          },
+          "pairs": [
+            {
+              "concept": "4.9.8. Function Annotations Function annotations are completely optional metadata information about the types used by user-defined functions (see PEP 3107 and PEP 484 for more information). Annotations are stored in the __annotations__ attribute of the function as a dictionary and have no effect on any other part of the function. Parameter annotations are defined by a colon after the parameter name, followed by an expression evaluating to the value of the annotation. Return annotations are defined by a literal -> , followed by an expression, between the parameter list and the colon denoting the end of the def statement. The following example has a required argument, an optional argument, and the return value annotated:",
+              "example": "def\n                                                \n                                                f\n                                                (\n                                                ham\n                                                :\n                                                str\n                                                ,\n                                                eggs\n                                                :\n                                                str\n                                                =\n                                                'eggs '\n                                                )\n                                                ->\n                                                str\n                                                :\n                                                \n                                                print\n                                                (\n                                                \"Annotations:\"\n                                                ,\n                                                f\n                                                .\n                                                __annotations__\n                                                )\n                                                \n                                                print\n                                                (\n                                                \"Arguments:\"\n                                                ,\n                                                ham\n                                                ,\n                                                eggs\n                                                )\n                                                \n                                                return\n                                                ham\n                                                +\n                                                'and '\n                                                +\n                                                eggs\n                                                \n                                                \n                                                f\n                                                (\n                                                'spam '\n                                                )"
+            }
+          ]
+        },
+        {
+          "metadata": {
+            "source_file": "chapter4.html",
+            "chapter_title": "4. More Control Flow Tools",
+            "section_id": "intermezzo-coding-style",
+            "section_number": "4.10.",
+            "section_title": "Intermezzo: Coding Style"
+          },
+          "pairs": [
+            {
+              "concept": "4.10. Intermezzo: Coding Style Now that you are about to write longer, more complex pieces of Python, it is a good time to talk about coding style . Most languages can be written (or more concise, formatted ) in different styles; some are more readable than others. Making it easy for others to read your code is always a good idea, and adopting a nice coding style helps tremendously for that. For Python, PEP 8 has emerged as the style guide that most projects adhere to; it promotes a very readable and eye-pleasing coding style. Every Python developer should read it at some point; here are the most important points extracted for you: Use 4-space indentation, and no tabs. 4 spaces are a good compromise between small indentation (allows greater nesting depth) and large indentation (easier to read). Tabs introduce confusion, and are best left out. Wrap lines so that they don’t exceed 79 characters. This helps users with small displays and makes it possible to have several code files side-by-side on larger displays. Use blank lines to separate functions and classes, and larger blocks of code inside functions. When possible, put comments on a line of their own. Use docstrings. Use spaces around operators and after commas, but not directly inside bracketing constructs: a = f(1, 2) + g(3, 4) . Name your classes and functions consistently; the convention is to use UpperCamelCase for classes and lowercase_with_underscores for functions and methods. Always use self as the name for the first method argument (see A First Look at Classes for more on classes and methods). Don’t use fancy encodings if your code is meant to be used in international environments. Python’s default, UTF-8, or even plain ASCII work best in any case. Likewise, don’t use non-ASCII characters in identifiers if there is only the slightest chance people speaking a different language will read or maintain the code. Footnotes [ 1 ] Actually, call by object reference would be a better description, since if a mutable object is passed, the caller will see any changes the callee makes to it (items inserted into a list).",
+              "example": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

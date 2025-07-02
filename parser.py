@@ -1,5 +1,5 @@
-# parser.py (Version 4.0 - The Golden Parser)
-# This version perfectly cleans code blocks by parsing the HTML spans.
+# parser.py (Version 5.0 - The Phoenix Parser)
+# This version refactors the logic for cleaner, more structured JSON output.
 
 import os
 import re
@@ -16,61 +16,15 @@ def get_clean_code_from_div(code_div) -> str:
         return ""
 
     code_parts = []
-    # .contents gives us a list of all children, including text nodes and tags
     for element in pre_tag.contents:
-        # Check if the element is a plain text node (like a newline)
         if isinstance(element, NavigableString):
             code_parts.append(str(element))
-        # Check if the element is a <span> tag
         elif element.name == 'span':
-            # This is the most important rule: if it's an output span, skip it.
-            if 'go' in element.get('class', []):
+            if 'go' in element.get('class', []) or 'gp' in element.get('class', []):
                 continue
-            
-            # If it's a prompt span, also skip it.
-            if 'gp' in element.get('class', []):
-                continue
-
-            # If it's any other kind of span, it's part of the code.
-            # We get its text content.
             code_parts.append(element.get_text())
             
-    # Join all the collected parts and strip any leading/trailing whitespace
     return "".join(code_parts).strip()
-
-
-    # The ideal case where spans are structured
-    for line in lines:
-      # Each line can contain multiple spans for syntax highlighting
-      line_spans = line.find_all('span')
-      line_text = ''
-      for span in line_spans:
-        # The key insight: ignore spans that are console output
-        if 'go' not in span.get('class', []):
-          line_text += span.get_text()
-      clean_code.append(line_text)
-
-    # In some cases, the above might not work if the structure is different.
-    # A more robust fallback:
-    if not any(clean_code) or len(clean_code) < 2 :
-        all_spans = code_div.find_all('span')
-        full_text_parts = []
-        for span in all_spans:
-            # The most important rule: Ignore the output spans.
-            if 'go' in span.get('class',[]):
-                continue
-            
-            # Remove the prompt part of the text
-            text = span.get_text()
-            if 'gp' in span.get('class', []):
-                text = text.replace('>>> ', '').replace('... ', '')
-
-            full_text_parts.append(text)
-        return "".join(full_text_parts).strip()
-
-
-    return "\n".join(clean_code).strip()
-
 
 def get_section_metadata(section_tag, file_name: str, chapter_title: str) -> Dict[str, Any]:
     """Extracts and cleans metadata from a section tag."""
@@ -84,53 +38,77 @@ def get_section_metadata(section_tag, file_name: str, chapter_title: str) -> Dic
     temp_header = BeautifulSoup(str(header), 'html.parser').find(header.name)
     if temp_header.find('span', class_='section-number'):
         temp_header.find('span', class_='section-number').decompose()
-    section_title = temp_header.text.strip().replace('¶', '').strip()
+    
+    section_title = temp_header.text.strip().replace('¶', '')
+    section_title = re.sub(r'\s+', ' ', section_title).strip()
 
     return {
         "source_file": file_name,
-        "chapter_title": chapter_title.replace('¶', '').strip(),
+        "chapter_title": chapter_title,
         "section_id": section_tag.get('id', 'unknown-section'),
         "section_number": section_number,
         "section_title": section_title
     }
 
-def process_section(section_tag, file_name, chapter_title) -> List[Dict[str, Any]]:
-    """Processes a single <section> tag to find concept-example pairs."""
-    pairs = []
+def process_section(section_tag, file_name: str, chapter_title: str) -> List[Dict[str, Any]]:
+    """
+    Processes a section and all its nested sections, returning a flat list
+    of dictionaries, where each dictionary represents a section with its pairs.
+    """
+    results = []
+    
+    # --- Process the current section ---
     metadata = get_section_metadata(section_tag, file_name, chapter_title)
+    pairs = []
     text_buffer = []
+    child_sections = []
 
+    # Iterate over direct children to separate text/code from child <section> tags
     for element in section_tag.children:
         if isinstance(element, NavigableString):
             continue
 
-        is_code_block = element.name == 'div' and element.get('class') and any('highlight' in c for c in element.get('class'))
+        if element.name == 'section':
+            child_sections.append(element)
+            continue
 
+        is_code_block = element.name == 'div' and 'highlight' in ' '.join(element.get('class', []))
+        
         if is_code_block:
             code_text = get_clean_code_from_div(element)
-            concept_text = "\n".join(text_buffer).strip()
+            concept_text = " ".join(text_buffer).strip()
+            concept_text = re.sub(r'\s+', ' ', concept_text)
+            concept_text = re.sub(r'\[\d+\]', '', concept_text).strip()
 
-            if concept_text and code_text:
-                content = f"Concept:\n{concept_text}\n\nExample:\n{code_text}"
-                pairs.append({"content": content, "metadata": metadata.copy()})
-            
+            if concept_text or code_text:
+                pairs.append({"concept": concept_text, "example": code_text})
             text_buffer = []
-        elif element.name == 'section':
-            pairs.extend(process_section(element, file_name, chapter_title))
         else:
-            text = re.sub(r'\[\d+\]', '', element.get_text())
-            text = text.strip().replace('¶', '').strip()
+            text = element.get_text(strip=True, separator=' ').replace('¶', '').strip()
             if text:
                 text_buffer.append(text)
-    
+
     if text_buffer:
-        content = f"Concept:\n" + "\n".join(text_buffer).strip()
-        pairs.append({"content": content, "metadata": metadata.copy()})
+        concept_text = " ".join(text_buffer).strip()
+        concept_text = re.sub(r'\s+', ' ', concept_text)
+        concept_text = re.sub(r'\[\d+\]', '', concept_text).strip()
+        if concept_text:
+            pairs.append({"concept": concept_text, "example": ""})
 
-    return pairs
+    if pairs:
+        results.append({
+            "metadata": metadata,
+            "pairs": pairs
+        })
 
-def extract_concept_pairs_from_file(file_path: str) -> List[Dict[str, Any]]:
-    """Main function to open and parse an HTML file."""
+    # --- Recursively process child sections ---
+    for child in child_sections:
+        results.extend(process_section(child, file_name, chapter_title))
+        
+    return results
+
+def extract_structured_data_from_file(file_path: str) -> Dict[str, Any]:
+    """Main function to open and parse an HTML file into a structured format."""
     print(f"Processing file: {file_path}...")
     
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -138,17 +116,25 @@ def extract_concept_pairs_from_file(file_path: str) -> List[Dict[str, Any]]:
 
     main_content = soup.find('div', role='main')
     if not main_content:
-        return []
+        return {}
     
     file_name = os.path.basename(file_path)
     chapter_title_tag = main_content.find('h1')
+    
     chapter_title = chapter_title_tag.text.strip() if chapter_title_tag else "Unknown Chapter"
+    chapter_title = re.sub(r'\s+', ' ', chapter_title.replace('¶', '')).strip()
 
     top_level_section = main_content.find('section')
     if not top_level_section:
-        return []
+        return {}
 
-    all_pairs = process_section(top_level_section, file_name, chapter_title)
+    all_sections_with_pairs = process_section(top_level_section, file_name, chapter_title)
     
-    print(f"Found {len(all_pairs)} total pairs/concepts in {file_name}.")
-    return all_pairs
+    total_pairs = sum(len(sec.get("pairs", [])) for sec in all_sections_with_pairs)
+    print(f"Found {len(all_sections_with_pairs)} sections with a total of {total_pairs} pairs in {file_name}.")
+    
+    return {
+        "source_file": file_name,
+        "chapter_title": chapter_title,
+        "sections": all_sections_with_pairs
+    }
