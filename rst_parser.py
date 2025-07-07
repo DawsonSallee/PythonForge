@@ -1,96 +1,105 @@
-
-
+import re
+from constants import HIERARCHY_RULES, SOURCE_DATA_PATH, TUTORIAL_FILES
 import os
-import glob
 import json
 
-def parse_rst_file(file_path):
+class RSTParser:
     """
-    Parses a single .rst file according to the Simplified Blueprint.
+    A robust parser for reStructuredText files from the Python tutorial,
+    designed to extract "Learning Units" consisting of a concept, its
+    associated code example, and its hierarchical topic.
     """
-    header_char_map = {}
-    current_hierarchy = []
-    text_buffer = []
-    output_list = []
-    next_header_level = 1
+    def __init__(self):
+        # A map from an underline character to its hierarchy level (e.g., '=' -> 0)
+        self.header_char_levels = HIERARCHY_RULES
+        self.header_chars = set(self.header_char_levels.keys())
 
-    with open(file_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+    def _clean_code(self, code_lines):
+        """Cleans a list of code lines by removing prompts and comments."""
+        cleaned_lines = []
+        for line in code_lines:
+            # Remove prompts like >>>, ..., and $
+            line = re.sub(r"^\s*(>>> |\.\.\. |\$ |\(tutorial-env\) \$ )", "", line)
+            # Ignore comments
+            if line.strip().startswith("#"):
+                continue
+            # Ignore blankline markers used in doctests
+            if "<BLANKLINE>" in line:
+                continue
+            cleaned_lines.append(line)
+        return "\n".join(cleaned_lines).strip()
 
-    for i, line in enumerate(lines):
-        stripped_line = line.strip()
+    def parse_file(self, file_path):
+        """
+        Parses a single .rst file and returns a list of Learning Unit dictionaries.
+        """
+        learning_units = []
+        # Initialize a list to hold the current topic hierarchy, one slot per level
+        topic_hierarchy = [""] * len(self.header_char_levels) # <-- FIX #1
+        concept_buffer = []
 
-        # Rule 1: Header Detection
-        if i + 1 < len(lines):
-            next_line = lines[i+1].strip()
-            if len(next_line) >= len(stripped_line) and len(set(next_line)) == 1 and next_line[0] in '!”#$%&\'()*+,-./:;<=>?@[\]^_`{|}~':
-                header_char = next_line[0]
-                if header_char not in header_char_map:
-                    header_char_map[header_char] = next_header_level
-                    next_header_level += 1
-                level = header_char_map[header_char]
+        source_filename = os.path.basename(file_path)
 
-                # Rule 2: Hierarchy Management
-                text_buffer.clear()
-                current_hierarchy = current_hierarchy[:level-1]
-                current_hierarchy.append(stripped_line)
-                continue # Move to the next line
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
 
-        # Rule 3: Concept & Code Pairing
-        if stripped_line == '.. code-block:: python':
-            code_lines = []
-            # Determine indentation of the directive
-            directive_indent = len(line) - len(line.lstrip(' '))
-            
-            # Capture indented code block
-            for j in range(i + 1, len(lines)):
-                code_line = lines[j]
-                code_line_stripped = code_line.strip()
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped_line = line.strip()
+
+            # --- Rule 1: Header Detection ---
+            if i + 1 < len(lines) and stripped_line:
+                next_line = lines[i+1].strip()
+                if next_line and next_line[0] in self.header_chars and all(c == next_line[0] for c in next_line):
+                    if len(next_line) >= len(stripped_line):
+                        header_level = self.header_char_levels[next_line[0]] # <-- FIX #2
+                        header_text = stripped_line
+                        
+                        concept_buffer = [] 
+                        
+                        topic_hierarchy[header_level] = header_text
+                        for j in range(header_level + 1, len(topic_hierarchy)):
+                            topic_hierarchy[j] = ""
+                        
+                        i += 2
+                        continue
+
+            # --- Rule 2: Code Block Detection ---
+            if stripped_line.startswith(".. code-block:: python") or stripped_line.endswith("::"):
                 
-                if not code_line_stripped: # preserve blank lines within code
-                    code_lines.append('')
-                    continue
+                code_block_lines = []
+                code_start_index = i + 1
+                while code_start_index < len(lines) and not lines[code_start_index].strip():
+                    code_start_index += 1
 
-                code_indent = len(code_line) - len(code_line.lstrip(' '))
-
-                if code_indent > directive_indent:
-                    code_lines.append(code_line.strip())
-                else:
-                    break # End of code block
+                if code_start_index < len(lines):
+                    first_code_line = lines[code_start_index]
+                    indentation = len(first_code_line) - len(first_code_line.lstrip())
+                    
+                    if indentation > 0:
+                        j = code_start_index
+                        while j < len(lines) and (not lines[j].strip() or (len(lines[j]) - len(lines[j].lstrip()) >= indentation)):
+                            code_block_lines.append(lines[j][indentation:])
+                            j += 1
+                        
+                        unit = {
+                            "unit_id": f"{source_filename}-{len(learning_units)}",
+                            "source_file": source_filename,
+                            "topic_hierarchy": [h for h in topic_hierarchy if h],
+                            "concept_text": "\n".join(concept_buffer).strip(),
+                            "example_code": self._clean_code(code_block_lines)
+                        }
+                        learning_units.append(unit)
+                        
+                        concept_buffer = []
+                        i = j
+                        continue
             
-            code = "\n".join(code_lines)
-
-            output_dict = {
-                'hierarchy': list(current_hierarchy),
-                'concept': " ".join(text_buffer).strip(),
-                'code': code
-            }
-            output_list.append(output_dict)
-            text_buffer.clear()
-            continue
-
-        # Rule 4: Edge Case Handling & Text Buffering
-        if stripped_line and not (len(set(stripped_line)) == 1 and stripped_line[0] in '!”#$%&\'()*+,-./:;<=>?@[\]^_`{|}~'):
-             # Ignore directives that are not '.. code-block:: python'
-            if stripped_line.startswith('..'):
-                 continue
-            text_buffer.append(stripped_line)
-
-    return output_list
-
-def main():
-    """
-    Main function to parse all .rst files in the tutorial directory.
-    """
-    tutorial_dir = os.path.join(os.path.dirname(__file__), 'tutorial')
-    rst_files = glob.glob(os.path.join(tutorial_dir, '*.rst'))
-    
-    all_parsed_data = []
-    for file_path in rst_files:
-        all_parsed_data.extend(parse_rst_file(file_path))
-
-    # For now, print the JSON output to stdout
-    print(json.dumps(all_parsed_data, indent=2))
-
-if __name__ == '__main__':
-    main()
+            # --- Rule 3: Buffer Concept Text ---
+            if not stripped_line.startswith(".."):
+                 concept_buffer.append(stripped_line)
+            
+            i += 1
+        
+        return learning_units
