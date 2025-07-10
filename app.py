@@ -322,9 +322,11 @@ PROMPT_TEMPLATES = {
 
 # This dictionary holds the specific instructions for each difficulty level.
 DIFFICULTY_LEVELS = {
+    "Infant": "Assume the user is an 30 IQ baby. Focus on the most basic concepts and examples. Keep questions and challenges extremely simple.",
     "Easy": "Assume the user is a beginner. Focus on the most fundamental concepts and examples. Keep questions and challenges straightforward and simple.",
     "Intermediate": "Assume the user understands the basics. Ask questions that require combining one or two ideas. Code challenges can be slightly more complex.",
-    "Advanced": "Assume the user is comfortable with the topic. Ask nuanced questions that test deep knowledge of edge cases or interactions between concepts. Challenges can be more open-ended or complex."
+    "Advanced": "Assume the user is comfortable with the topic. Ask nuanced questions that test deep knowledge of edge cases or interactions between concepts. Challenges can be more open-ended or complex.",
+    "PHD": "Assume the user is the best in the world at this topic. Ask nearly impossible questions that require deep understanding and synthesis of multiple advanced concepts. Challenges should be complex, multi-step problems that require creative solutions. Questions should be more difficult than the most advanced LeetCode problems"
 }
 
 
