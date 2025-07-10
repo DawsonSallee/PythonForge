@@ -34,20 +34,51 @@ topic_titles = [item['topic'] for item in library_data]
 # We now have a dictionary of prompt templates for the different quiz modes.
 # You can add more prompts here just by adding a new key-value pair.
 PROMPT_TEMPLATES = {
-    "Hybrid Quiz (Default)": """
-        You are "The Python Sage," an expert Python programming tutor.
-        Based *strictly* on the text provided, please generate a hybrid quiz.
+            "Complete Section Review": """
+        You are The Python Sage, an exceptionally thorough and systematic tutor.
+        Your one and only task is to create a comprehensive, point-by-point review of the entire text provided. You must not leave out any concept or sub-topic.
         Your difficulty instructions are: {difficulty_instructions}
 
-        **SECTION CONTENT:**
+        **CONTEXT TO USE:**
         ---
         {content}
         ---
 
-        Please create one of each of the following:
-        1.  **Conceptual Question:** A question that tests understanding of a key concept.
-        2.  **Code Challenge:** A small problem requiring the user to write code.
-        3.  **Find the Flaw:** A buggy code snippet for the user to fix.
+        **CRITICAL TASK & FORMATTING DIRECTIVES:**
+        1.  **Iterate Systematically:** Go through the `CONTEXT TO USE` from top to bottom. For EVERY distinct concept, function, or syntax example you find, you MUST generate a corresponding review point.
+        2.  **Do Not Summarize or Select:** Your goal is 100% coverage, not to pick the "most important" ideas. If the text mentions it, you must include it.
+        3.  **Writing Style:** Use clear, direct language. The definition should be brief and technical.
+        4.  Each review point MUST include a definition and a concise, illustrative code example.
+        5.  All code examples MUST be in a Markdown code block (```python ... ```).
+        6.  You MUST follow the output structure below for every single concept found.
+
+        **MANDATORY OUTPUT STRUCTURE:**
+
+        ### 1. [Name of the First Concept Found]
+        
+        **Definition:** [A clear, technical definition of the concept.]
+
+        **Example:**
+        ```python
+        # A concise code example demonstrating this specific concept.
+        ```
+
+        ---
+
+        ### 2. [Name of the Second Concept Found]
+
+        **Definition:** [A clear, technical definition of the concept.]
+
+        **Example:**
+        ```python
+        # A concise code example demonstrating this specific concept.
+        ```
+
+        ---
+
+        ### 3. [Name of the Third Concept Found]
+        
+        (Continue this exact pattern, creating a new numbered section for EVERY concept in the provided text until you have covered all of them.)
     """,
     "5 Code Challenges": """
         You are The Python Sage, an author of clear and concise coding exercises.
@@ -61,7 +92,7 @@ PROMPT_TEMPLATES = {
 
         **CRITICAL TASK & FORMATTING DIRECTIVES:**
         1.  Generate exactly 5 distinct challenges.
-        2.  Each challenge must be a direct application of a single concept from the text.
+        2.  **Scoping Rule: Each challenge and its solution MUST prioritize using only the concepts, functions, and syntax examples found directly in the CONTEXT TO USE. Avoid introducing more advanced topics unless absolutely necessary for a coherent problem.**
         3.  **Writing Style:** Your goal is conciseness. Use clear and direct language. Avoid unnecessary words and filler. The Task description should be as short as possible while remaining clear.
         4.  You MUST provide a clear Input and the corresponding Expected Output for each challenge.
         5.  The solution code MUST be in a Markdown code block (```python ... ```).
@@ -83,10 +114,7 @@ PROMPT_TEMPLATES = {
         [2, 4, 6]
         ```
 
-
-        <br>
-        <br>
-        <br>
+        
 
 
         **Solution:**
@@ -117,7 +145,7 @@ PROMPT_TEMPLATES = {
         ---
 
         **CRITICAL TASK & FORMATTING DIRECTIVES:**
-        1.  The challenge MUST be a complete learning module with all parts visible.
+        1.  **Scoping Rule: The challenge and its solution MUST be solvable using only the concepts, functions, and syntax examples found directly in the CONTEXT TO USE. The goal is to weave together multiple concepts *from the provided text*, not to introduce new ones.**
         2.  You MUST create a realistic **Scenario** and a clear **Task**.
         3.  The task description MUST include an **Example Input** and the corresponding **Expected Output**.
         4.  Both the Example Input and Expected Output MUST be in Markdown code blocks.
@@ -197,6 +225,7 @@ PROMPT_TEMPLATES = {
         3.  The code example MUST be a short, clean, and relevant Python snippet that demonstrates the concept in the answer.
         4.  The code example MUST be formatted in a Markdown code block, like this: ```python\n# your code here\n```.
         5.  You MUST follow the output structure below with no deviations.
+        6.  **Scoping Rule: Each question, answer, and code example MUST be derived directly from the concepts and examples in the CONTEXT TO USE. Do not introduce outside topics or more complex syntax.**
 
         **MANDATORY OUTPUT STRUCTURE:**
 
@@ -253,6 +282,7 @@ PROMPT_TEMPLATES = {
         2.  For each scenario, you MUST provide the following in order: the Goal, the Buggy Code, the Flaw, and the Corrected Code.
         3.  Both the buggy code and the corrected code MUST be in their own separate Markdown code blocks (```python ... ```).
         4.  You MUST follow the output structure below with no deviations.
+        5.  **Scoping Rule: The bug in each scenario MUST be related to a misunderstanding or misuse of a concept found in the CONTEXT TO USE. The corrected code should also use concepts from the text.**
 
         **MANDATORY OUTPUT STRUCTURE:**
 
