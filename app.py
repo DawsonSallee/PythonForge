@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 try:
     genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    model = genai.GenerativeModel('gemini-2.5-flash')
 except Exception as e:
     st.error(f"Error configuring AI model: {e}")
     st.stop()
@@ -80,9 +80,9 @@ PROMPT_TEMPLATES = {
         
         (Continue this exact pattern, creating a new numbered section for EVERY concept in the provided text until you have covered all of them.)
     """,
-    "5 Code Challenges": """
-        You are The Python Sage, an author of clear and concise coding exercises.
-        Your task is to generate 5 practical code challenges based ONLY on the provided text.
+        "Concept-by-Concept Code Challenges": """
+        You are The Python Sage, an exceptionally thorough and systematic coding exercise designer.
+        Your one and only task is to generate a code challenge for EVERY distinct concept, function, or syntax example found in the provided text.
         Your difficulty instructions are: {difficulty_instructions}
 
         **CONTEXT TO USE:**
@@ -91,48 +91,59 @@ PROMPT_TEMPLATES = {
         ---
 
         **CRITICAL TASK & FORMATTING DIRECTIVES:**
-        1.  Generate exactly 5 distinct challenges.
-        2.  **Scoping Rule: Each challenge and its solution MUST prioritize using only the concepts, functions, and syntax examples found directly in the CONTEXT TO USE. Avoid introducing more advanced topics unless absolutely necessary for a coherent problem.**
-        3.  **Writing Style:** Your goal is conciseness. Use clear and direct language. Avoid unnecessary words and filler. The Task description should be as short as possible while remaining clear.
+        1.  **Systematic Coverage & Intelligent Grouping:** Go through the `CONTEXT TO USE` from top to bottom. Generate a code challenge for **each distinct concept or logical group of short, closely related concepts**. Your goal is 100% coverage of all challengeable concepts from the text, but avoid creating trivial challenges by combining where sensible.
+        2.  **Scoping Rule:** Each challenge and its solution MUST use only the concepts, functions, and syntax examples found directly in the CONTEXT TO USE. Avoid introducing more advanced topics.
+        3.  **Writing Style:** Keep all descriptions (Task, Input, Expected Output) concise and direct.
         4.  You MUST provide a clear Input and the corresponding Expected Output for each challenge.
-        5.  The solution code MUST be in a Markdown code block (```python ... ```).
-        6.  You MUST follow the output structure below exactly, including the blank lines for spacing.
+        5.  All code (Input, Solution) and text output (Expected Output) MUST be in Markdown code blocks.
+        6.  You MUST follow the output structure below exactly, including numbering and spacing, for every single concept found.
 
         **MANDATORY OUTPUT STRUCTURE:**
 
-        **1. Code Challenge: [A short title, e.g., "Filtering a List"]**
+        ### 1.[Name of the First Concept Found]
 
-        **Task:** [A clear and direct description of the goal. Be concise.]
+        **Task:** [A clear and direct description of the goal related to this concept.]
 
         **Input:**
         ```python
-        numbers = [1, 2, 3, 4, 5, 6]
+        # Example data related to the concept.
         ```
 
         **Expected Output:**
         ```text
-        [2, 4, 6]
+        # The exact output of running the solution with the example input.
         ```
-
-        
 
 
         **Solution:**
         ```python
-        # The concise and correct code solution.
-        numbers = [1, 2, 3, 4, 5, 6]
-        evens = [n for n in numbers if n % 2 == 0]
-        print(evens)
+        # The concise and correct code solution for this specific concept.
         ```
 
         ---
 
-        **2. Code Challenge: [Another short title]**
+        ### 2.[Name of the Second Concept Found]
 
-        (Follow the exact same structure as above, including the three `<br>` tags for spacing)
+        **Task:** [A clear and direct description of the goal related to this concept.]
+
+        **Input:**
+        ```python
+        # Example data related to the concept.
+        ```
+
+        **Expected Output:**
+        ```text
+        # The exact output of running the solution with the example input.
+        ```
+
+
+        **Solution:**
+        ```python
+        # The concise and correct code solution for this specific concept.
+        ```
 
         ---
-        (Continue this exact pattern for all 5 challenges)
+        (Continue this exact pattern, creating a new numbered section for EVERY concept in the provided text until you have covered all of them.)
     """,
     "1 Comprehensive Code Challenge": """
         You are "The Python Sage," a master designer of intricate, multi-step coding puzzles and capstone challenges, modeling your output after professional coding platforms.
