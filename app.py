@@ -165,7 +165,7 @@ PROMPT_TEMPLATES = {
 
         **MANDATORY OUTPUT STRUCTURE:**
 
-        **Challenge: [Create a Descriptive Title for the Challenge]**
+        **[Create a Descriptive Title for the Challenge]**
 
         **Scenario:**
         [A 1-2 sentence story or context for the problem. e.g., "You are building a data processing pipeline for a university. You need to filter and format a list of student records."]
